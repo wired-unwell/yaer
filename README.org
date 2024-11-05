@@ -1,1 +1,143 @@
 * A playground for learning programming
+
+Here lies my messy codes that I experiment with to
+both have fun /and/ learn progrmming concepts and languages.
+Indeed, bigger projects and serious tutorials won't be here.
+
+I hate that [[][onefetch] does not support either Fennel or Janet!
+but I'm not using them (extensively) yet so it's forgivable ATM!
+Currently the repository is mostly Python and Lua.
+
+* Cheat-sheet
+
+Any small important note that /I/ have to know gets here.
+
+** ASCII escape character
+
+- \033 :: python
+- \x1b :: lua
+- \e :: shell
+- ^[ :: ?
+
+* What is in this Repo
+** Drafts
+
+All sort of small stuff I'm trying to learn something small.
+
+** Projects
+
+Projects that aim to result in something more than a small test script.
+This thing is possibly REDUNDANT and useless, because things might grow
+big enough to require exclusive repositories /soon/.
+
+*** First TUI Application python
+**** Some Stuff
+- a reddit thread [[[https://www.reddit.com/r/Python/comments/qdj1xr/best_tui_libraryframework/][link]]]
+- seems easy [[[https://github.com/pabloniklas/cur_tools][cur_tools]]]
+- seems beautiful and cool [[[https://github.com/bczsalba/pytermgui][pytermgui]]]
+- [ ] check later https://github.com/pfalcon/picotui
+*** Love2D Bare UI
+*** Store-Inventory UX
+*** Org-Habit Visualizer
+
+** Tutorials
+
+Of course. Dedicated folders to learn an important concept, by usually
+following along with one or more unofficial tutorials, blogs, etc.
+
+* Other
+
+** About The Languages
+
+*** Python
+
+For almost anything productive! The S-rate language I hate.
+- GUI: [[https://www.riverbankcomputing.com/static/Docs/PyQt6/][PyQt6]] ([[https://doc.qt.io/qt-6/][Qt6]]), [[https://kivymd.readthedocs.io/][KivyMD]] ([[http://kivy.org/][Kivy]])
+- Data Analysis: [[https://pandas.pydata.org/][pandas]]
+
+*** Lua
+
+For almost anything, the underrated S-rated language /I love/.
+Daily usage scripts, learning various programming concepts,
+scripting, creating micro games and tools (LOVE2D, TIC-80).
+
+*** Janet
+
+Seems like the best /independent/ LISP scripting language I know right now.
+
+*** Fennel
+
+Lua in LISP style. Janet's rival I guess.
+
+*** BASH
+
+Scripting and system interaction.
+
+*** FISH
+
+The name says it all. Friendly Interactive SHell.
+
+*** R
+
+For Statistics and Data Analysis.
+
+*** Go
+
+I fucking hate being blocked by google due to sancions.
+- Web Dev:
+- GUI: fyne.io
+
+*** Other interesting stuff
+
+**** Clojure
+**** Common Lisp
+**** Haskel
+**** Julia
+**** OCaml
+**** Ruby
+**** Rust
+**** Scheme
+** Some Resources
+
+- [[https://sqrtminusone.xyz/posts/2021-05-01-org-python/][Replacing Jupyter Notebook with Org Mode]]
+- [[https://www.johndcook.com/blog/2022/08/02/org-babel-vs-jupyter/][Org-mode as a lightweight notebook]]
+- [[https://irreal.org/blog/?p=10720][Org-mode Versus Jupyter Notebook]]
+- [[https://en.wikipedia.org/wiki/Programming_paradigm][Programming paradigms Wikipedia]]
+- [[https://realpython.com/python-functional-programming/][Functional Programming in Python: When and How to Use It]]
+
+*** [[https://www.geeksforgeeks.org/data-structures/][Geeks For Geeks - Data Structures]]
+
+*** [[https://www.w3schools.com/datascience/ds_python.asp][W3Schools - Data Science]]                                       :python:
+
+- [[https://www.w3schools.com/python/pandas/default.asp][Pandas]] - This library is used for structured data operations, like import CSV files, create dataframes, and data preparation
+- [[https://www.w3schools.com/python/numpy_intro.asp][Numpy]] - This is a mathematical library. Has a powerful N-dimensional array object, linear algebra, Fourier transform, etc.
+- [[https://www.w3schools.com/python/matplotlib_intro.asp][Matplotlib]] - This library is used for visualization of data.
+- [[https://www.w3schools.com/python/scipy_intro.asp][SciPy]] - This library has linear algebra modules
+
+** Awesome Lists
+
+- [[https://github.com/krzjoa/awesome-python-data-science][Awesome Python Data Science]]
+
+* License
+
+Every piece of code I write here will be licensed under GPL-3.0,
+unless otherwise stated.
+See [[file:LICENSE][GNU General Public License]] local file, or its [[https://www.gnu.org/licenses/gpl-3.0.html][web page].
+
+#+begin_src
+This program is just a directory of followed tutorials to track my learning.
+Copyright (C) 2024 Behnam (wired_unwell@noreply.codeberg.org)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#+end_src
