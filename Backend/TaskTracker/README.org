@@ -1,0 +1,31 @@
+A small task manager app for [[https://roadmap.sh/projects/task-tracker][this exercise]].
+
+* Status [8/8]
+- [X] Add,
+- [X] Update,
+- [X] and Delete tasks
+- [X] Mark a task as in progress
+- [X] or done
+- [X] List all tasks
+- [X] List all tasks that are not done
+- [X] List all tasks that are in progress
+
+* A task:
+
+- [X] id: A unique identifier for the task
+- [ ] description: A short description of the task
+- [X] status: The status of the task (todo, in-progress, done)
+- [X] createdAt: The date and time when the task was created
+- [ ] updatedAt: The date and time when the task was last updated
+
+* Enhancements and Extras
+
+- [ ] Due-date to filter list.
+- A =directory= option to change the tasks file.
+
+* Notes
+
+I can't believe I receive HTTP errors when I try to install some packages or
+libraries with pip. This is unfair.
+
+Lua rocks.

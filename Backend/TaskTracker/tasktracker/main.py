@@ -1,0 +1,239 @@
+# A dumb task manager commandline application.
+# Copyright (C) 2024 Behnam (Wired Unwell)
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+import click
+import datetime as dt
+import json
+from pprint import pp
+import random
+from prettytable import PrettyTable as pt
+from prettytable import from_json
+
+# from hashlib import md5
+# import rich
+
+
+@click.group()
+def cli():
+    pass
+
+
+# remember
+# json.dump(data, file)
+
+
+@click.command("list", help="List tasks")
+@click.option(
+    "-nd", "--nodone", default=False, is_flag=True, help="Don't list finished tasks."
+)
+@click.option(
+    "-nt", "--notodo", default=False, is_flag=True, help="Don't list unstarted tasks."
+)
+@click.option(
+    "-np",
+    "--noinprogress",
+    default=False,
+    is_flag=True,
+    help="Don't list inprogress tasks.",
+)
+@click.option(
+    "-DD",
+    "--duedate",
+    default=None,
+    is_flag=False,
+    # type=dt.datetime,
+    help="List tasks due",
+)
+@click.option(
+    "-D", "--directory", default="./tasks", is_flag=False, help="Tasks directory"
+)
+def list_tasks(nodone, notodo, noinprogress, directory, duedate):
+    # print("List tasks")
+    with open(directory, "r", encoding="utf-8") as tasks_file:
+        tasks = json.load(tasks_file)
+    del_index = []
+    for id in tasks:
+        if (
+            nodone
+            and tasks[id]["status"] == "done"
+            or notodo
+            and tasks[id]["status"] == "todo"
+            or noinprogress
+            and tasks[id]["status"] == "inprogress"
+        ):
+            del_index += [id]
+    for id in del_index:
+        del tasks[id]
+
+    table = pt()
+    table.field_names = ["ID", "Status", "Title", "Deadline"]
+    for item in tasks:
+        icon=''
+        if tasks[item]["status"] == 'done':
+            icon=''
+        elif tasks[item]["status"] == 'todo':
+            icon=''
+        elif tasks[item]["status"] == 'inprogress':
+            icon=''
+        table.add_row(
+            [
+                tasks[item]["id"],
+                icon,
+                tasks[item]["title"],
+                tasks[item]["duedate"],
+            ]
+        )
+    print(table)
+
+
+cli.add_command(list_tasks)
+cli.add_command(list_tasks, name="l")
+
+
+@click.command("new", help="Add a new task.")
+@click.argument("title")
+@click.option(
+    "-D",
+    "--description",
+    default="",
+)
+@click.option(
+    "-dd",
+    "--duedate",
+    default=dt.datetime.strftime(
+        dt.datetime.now() + dt.timedelta(days=3), "%Y-%m-%d %H:%M"
+    ),
+    # type=dt.datetime,
+    help="Due time/Deadline, format: 'yyyy-mm-dd HH:MM'. i.e. 2021-11-21 21:31",
+)
+@click.option(
+    "-cd",
+    "--createdtime",
+    default=dt.datetime.strftime(dt.datetime.now(), "%Y-%m-%d %H:%M"),
+    help="Change the creation time of a task",
+)
+@click.option(
+    "-s",
+    "--status",
+    default="todo",
+    help="Change the status/progress of a task",
+)
+@click.option(
+    "-D", "--directory", default="./tasks", is_flag=False, help="Tasks directory"
+)
+# HOLY FUCK. So I'm using .date because it makes it easier to handle the stuff I want.
+# It is not good at all. I want to have hours as well. This is not a good way to create
+# exceptions, I'm sure of it
+def new_task(title, description, duedate, createdtime, directory, status):
+    try:
+        duedate = dt.datetime.strptime(duedate, "%Y-%m-%d %H:%M")
+    except ValueError:
+        print("\033[1;31mDuedate format is broken\033[0m")
+    except TypeError:
+        if type(duedate) == "datetime":
+            print("Already a datetime")
+    else:
+        try:
+            createdtime = dt.datetime.strptime(createdtime, "%Y-%m-%d %H:%M")
+        except ValueError:
+            print("\033[1;31mCreated time format is broken\033[0m")
+        except TypeError:
+            if type(createdtime) == "datetime":
+                print("Already a datetime")
+        else:
+            with open(directory, "r", encoding="utf-8") as tasks_file:
+                # tasks = list(json.load(tasks_file))
+                # print(tasks_file)
+                # print('===============')
+                tasks = json.load(tasks_file)
+            task = {
+                # "id": str(random.randrange(100000, 999999)),
+                "id": str(len(tasks) + 1),
+                "title": str(title),
+                "duedate": str(duedate),
+                "createdtime": str(createdtime),
+                "status": str(status),
+            }
+            # pp(task)
+            # rich.print(task)
+            with open(directory, "w", encoding="utf-8") as tasks_file:
+                while task["id"] in tasks:
+                    task["id"] = str(random.randrange(100000, 999999))
+                tasks[task["id"]] = task
+                json.dump(tasks, tasks_file)
+
+                # pp(tasks)
+
+    # click.echo(
+    #     title
+    #     + "\t"
+    #     + str(duedate.date())
+    #     + "\t"
+    #     + str(duedate.time())
+    #     + "\t"
+    #     + description
+    # )
+
+
+cli.add_command(new_task)
+cli.add_command(new_task, "n")
+
+
+@click.command(name="edit", help="Edit and update your tasks")
+@click.argument("id")
+@click.option(
+    "-d", "--done", default=False, is_flag=True, help="Set task's status to done"
+)
+@click.option(
+    "-t", "--todo", default=False, is_flag=True, help="Set task's status to todo"
+)
+@click.option(
+    "-p",
+    "--inprogress",
+    default=False,
+    is_flag=True,
+    help="Set task's status to in progress.",
+)
+@click.option("--delete", default=False, is_flag=True, help="Delete task.")
+@click.option("-T", "--title", help="Change task's title.")
+@click.option(
+    "-D", "--directory", default="./tasks", is_flag=False, help="Tasks directory"
+)
+def edit_task(id, done, todo, inprogress, delete, title, directory):
+    with open(directory, "r", encoding="utf-8") as tasks_file:
+        tasks = json.load(tasks_file)
+    if id in tasks:
+        if delete:
+            del tasks[id]
+        if done:
+            tasks[id]["status"] = "done"
+        if todo:
+            tasks[id]["status"] = "todo"
+        if inprogress:
+            tasks[id]["status"] = "inprogress"
+        if title:
+            tasks[id]["title"] = title
+        with open(directory, "w", encoding="utf-8") as tasks_file:
+            json.dump(tasks, tasks_file)
+    else:
+        print("\033[1;31mCheck the id properly, I didn't find the task.\033[0m")
+
+
+cli.add_command(edit_task)
+cli.add_command(edit_task, name="e")
+
+if __name__ == "__main__":
+    cli()
