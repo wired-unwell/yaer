@@ -13,14 +13,18 @@ A small task manager app for [[https://roadmap.sh/projects/task-tracker][this ex
 * A task:
 
 - [X] id: A unique identifier for the task
-- [ ] description: A short description of the task
+- [X] description: A short description of the task
+  - it's =title=.
 - [X] status: The status of the task (todo, in-progress, done)
 - [X] createdAt: The date and time when the task was created
-- [ ] updatedAt: The date and time when the task was last updated
+- [X] updatedAt: The date and time when the task was last updated
+  - empty =updatetime= means the task has not been updated.
 
 * Enhancements and Extras
 
 - [ ] Due-date to filter list.
+- [X] Extra description,
+- [X] which you can see using =show= command.
 - A =directory= option to change the tasks file.
 
 * Notes

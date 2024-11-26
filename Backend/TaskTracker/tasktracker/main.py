@@ -81,13 +81,13 @@ def list_tasks(nodone, notodo, noinprogress, directory, duedate):
     table = pt()
     table.field_names = ["ID", "Status", "Title", "Deadline"]
     for item in tasks:
-        icon=''
-        if tasks[item]["status"] == 'done':
-            icon=''
-        elif tasks[item]["status"] == 'todo':
-            icon=''
-        elif tasks[item]["status"] == 'inprogress':
-            icon=''
+        icon = ""
+        if tasks[item]["status"] == "done":
+            icon = ""
+        elif tasks[item]["status"] == "todo":
+            icon = ""
+        elif tasks[item]["status"] == "inprogress":
+            icon = ""
         table.add_row(
             [
                 tasks[item]["id"],
@@ -209,23 +209,40 @@ cli.add_command(new_task, "n")
 )
 @click.option("--delete", default=False, is_flag=True, help="Delete task.")
 @click.option("-T", "--title", help="Change task's title.")
+@click.option("-de", "--description", help="Change task's description.")
 @click.option(
     "-D", "--directory", default="./tasks", is_flag=False, help="Tasks directory"
 )
-def edit_task(id, done, todo, inprogress, delete, title, directory):
+def edit_task(id, done, todo, inprogress, delete, title, description, directory):
     with open(directory, "r", encoding="utf-8") as tasks_file:
         tasks = json.load(tasks_file)
     if id in tasks:
+        # Sorry, I'm just too loose for cool names rn.
+        wtf = True
         if delete:
             del tasks[id]
+            wtf = False
         if done:
             tasks[id]["status"] = "done"
+            wtf = False
         if todo:
             tasks[id]["status"] = "todo"
+            wtf = False
         if inprogress:
             tasks[id]["status"] = "inprogress"
+            wtf = False
         if title:
             tasks[id]["title"] = title
+            wtf = False
+        if description:
+            tasks[id]["description"] = description
+            wtf = False
+        if wtf:
+            print("Did you write the right command? Use --help.")
+        else:
+            tasks[id]["updatedtime"] = dt.datetime.strftime(
+                dt.datetime.now(), "%Y-%m-%d %H:%M"
+            )
         with open(directory, "w", encoding="utf-8") as tasks_file:
             json.dump(tasks, tasks_file)
     else:
@@ -234,6 +251,30 @@ def edit_task(id, done, todo, inprogress, delete, title, directory):
 
 cli.add_command(edit_task)
 cli.add_command(edit_task, name="e")
+
+
+@click.command(name="show", help="Show a task and its details")
+@click.argument("id")
+@click.option(
+    "-D", "--directory", default="./tasks", is_flag=False, help="Tasks directory"
+)
+def show_task(id, directory):
+    with open(directory, "r", encoding="utf-8") as tasks_file:
+        tasks = json.load(tasks_file)
+    if id in tasks:
+        for key in tasks[id]:
+            if tasks[id][key] != None:
+                print(
+                    "\033[3" + str(random.randrange(1, 8)) + "m" + tasks[id][key],
+                    end="\t",
+                )
+        print("\033[0m")
+    else:
+        print("\033[1;31mCheck the id properly, I didn't find the task.\033[0m")
+
+
+cli.add_command(show_task)
+cli.add_command(show_task, name="s")
 
 if __name__ == "__main__":
     cli()
