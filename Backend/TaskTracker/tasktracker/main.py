@@ -22,17 +22,10 @@ import random
 from prettytable import PrettyTable as pt
 from prettytable import from_json
 
-# from hashlib import md5
-# import rich
-
 
 @click.group()
 def cli():
     pass
-
-
-# remember
-# json.dump(data, file)
 
 
 @click.command("list", help="List tasks")
@@ -116,7 +109,6 @@ cli.add_command(list_tasks, name="l")
     default=dt.datetime.strftime(
         dt.datetime.now() + dt.timedelta(days=3), "%Y-%m-%d %H:%M"
     ),
-    # type=dt.datetime,
     help="Due time/Deadline, format: 'yyyy-mm-dd HH:MM'. i.e. 2021-11-21 21:31",
 )
 @click.option(
@@ -134,9 +126,7 @@ cli.add_command(list_tasks, name="l")
 @click.option(
     "-D", "--directory", default="./tasks", is_flag=False, help="Tasks directory"
 )
-# HOLY FUCK. So I'm using .date because it makes it easier to handle the stuff I want.
-# It is not good at all. I want to have hours as well. This is not a good way to create
-# exceptions, I'm sure of it
+# Sorry, the date handling could be way better here
 def new_task(title, description, duedate, createdtime, directory, status):
     try:
         duedate = dt.datetime.strptime(duedate, "%Y-%m-%d %H:%M")
@@ -155,37 +145,19 @@ def new_task(title, description, duedate, createdtime, directory, status):
                 print("Already a datetime")
         else:
             with open(directory, "r", encoding="utf-8") as tasks_file:
-                # tasks = list(json.load(tasks_file))
-                # print(tasks_file)
-                # print('===============')
                 tasks = json.load(tasks_file)
             task = {
-                # "id": str(random.randrange(100000, 999999)),
                 "id": str(len(tasks) + 1),
                 "title": str(title),
                 "duedate": str(duedate),
                 "createdtime": str(createdtime),
                 "status": str(status),
             }
-            # pp(task)
-            # rich.print(task)
             with open(directory, "w", encoding="utf-8") as tasks_file:
                 while task["id"] in tasks:
                     task["id"] = str(random.randrange(100000, 999999))
                 tasks[task["id"]] = task
                 json.dump(tasks, tasks_file)
-
-                # pp(tasks)
-
-    # click.echo(
-    #     title
-    #     + "\t"
-    #     + str(duedate.date())
-    #     + "\t"
-    #     + str(duedate.time())
-    #     + "\t"
-    #     + description
-    # )
 
 
 cli.add_command(new_task)
@@ -217,7 +189,7 @@ def edit_task(id, done, todo, inprogress, delete, title, description, directory)
     with open(directory, "r", encoding="utf-8") as tasks_file:
         tasks = json.load(tasks_file)
     if id in tasks:
-        # Sorry, I'm just too loose for cool names rn.
+        # This /is/ a cool variable name.
         wtf = True
         if delete:
             del tasks[id]
