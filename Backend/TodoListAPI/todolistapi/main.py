@@ -5,11 +5,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy as sqla
 from functools import wraps
 import base64, json, hmac, hashlib  # For manual JWT
+from os import environ
+from time import time
 
 ## Configurations
 
-SECRET_KEY = "my_dummy_secret_key"
-# SECRET_KEY=sys.argv[0]
+
+if "SECRET_KEY" in environ:
+    SECRET_KEY = environ["SECRET_KEY"]
+else:
+    SECRET_KEY = "my_dummy_secret_key"
 
 app = Flask(__name__)
 # app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{Path(__file__).parent}/database.db"
@@ -67,11 +72,29 @@ def verify_jwt(jwt, secret=SECRET_KEY):
         payload = base64.urlsafe_b64decode(p + "==").decode()
         s_c = hmac.new(secret.encode(), f"{h}.{p}".encode(), hashlib.sha256).digest()
         s_s = base64.urlsafe_b64encode(s_c).decode().strip("=")
+        # print("\x1b[33m=====Verify JWT Begins\x1b[0m")
         if s_s != s:
+            print(
+                "\x1b[31m======================\n"
+                + "Bad signature!\n"
+                + "======================\x1b[0m"
+            )
             return False
         else:
-            return payload
+            pj = json.loads(payload)
+            # ttt = int(pj
+            if float(pj["exp"]) > time():
+                # print("\x1b[33m=====OKAY\x1b[0m")
+                return payload
+            else:
+                print(
+                    "\x1b[31m======================\n"
+                    + "The token has expired!\n"
+                    + "======================\x1b[0m"
+                )
+                return False
     except:
+        print("\x1b[33m Unexpected error\x1b[0m")
         return False
 
 
@@ -134,7 +157,7 @@ def login():
         p = data["password"]
         if check_password_hash(user.password, p):
             token = create_jwt(
-                payload={"user_id": str(user.id), "token_expires_on": "never"}
+                payload={"sub": str(user.id), "exp": str(time() + 3600)}
             )
             return jsonify({"token": token}), 200
         else:
@@ -154,7 +177,8 @@ def protect_endpoint():
         @wraps(func)
         def wrapper(*args, **kwargs):
             if (
-                verify_jwt(request.headers["Authorization"])
+                # I'm not yet comfortable with that /Bearer/ format.
+                verify_jwt(request.headers["Authorization"]) # ( ___ .split(" ")[1])
                 and len(
                     list(
                         db.session.execute(
@@ -170,9 +194,7 @@ def protect_endpoint():
                 )
                 .scalar_one()
                 .id
-                == int(
-                    json.loads(verify_jwt(request.headers["Authorization"]))["user_id"]
-                )
+                == int(json.loads(verify_jwt(request.headers["Authorization"]))["sub"]) # OR ((( ___ .split(" ")[1]))["sub"])
             ) or request.headers[
                 "Authorization"
             ] == "admin":  # INSECURE AND FOR DEBUGGIN ONLY, REMOVE AFTER PRODUCTION.
@@ -222,10 +244,6 @@ def new_todo():
         todo = data["todo"]
     except KeyError:
         return jsonify({"message": "No TODO was provided."}), 500
-    # try:
-    #     user_id = todo["user_id"]
-    # except KeyError:
-    #     return jsonify({"message": "No user_id was provided."}), 500
     try:
         title = todo["title"]
     except KeyError:
