@@ -7,6 +7,25 @@ I then **_might_** make this API work with something else as well, like my [Task
 
 Also, the code is [**blacked**](https://github.com/psf/black)!
 
+# Notices
+
+## Security
+
+THIS API IS **NOT SECURE**! I KNOW THERE WILL BE A FEW VULNERABILITIES.
+They would be fixed if I used proper third party libraries for
+everything, but I decided to learn the basic concepts of those
+by implementing them myself. Indeed, I'm mostly talking about
+JWT and endpoint protection.
+
+Also, at `protect_endpoint` (around `line 200`) there is a very important back-door-ish thing
+that is a security nightmare and can easily bypass the whole JWT.
+I used that because I don't like logging in during tests.
+
+## License
+
+This is a part of my learning project, released under GPL-3.0.
+See [LICENSE](./../../LICENSE) in the root of the repository.
+
 # Some AI Transparency
 
 So, I've tried my best to avoid AI generated code in this small project. 
@@ -29,14 +48,18 @@ This is very important to keep track of.
   - [x] `POST /login`
   - Login is very insecure at the moment.
 - [x] Basic authentication function to protect endpoints
-- [ ] Proper:
-  - [ ] tokenization (expiration, randomness, etc)
-  - [ ] data validation (sign data by user)
 - Todo Class/Table -- basic `CRUD` done!
   - [x] `POST /todos`
   - [x] `GET /todos`
-	- [ ] Pagination and filtering
   - [x] `PUT /todos`
   - [x] `DELETE /todos`
 - [x] Basic security and errors 
-- [ ] Check security measures and errors 
+- [ ] Security Measures and 
+- [ ] Error handling
+- [x] Tokenization (expiration, randomness, etc)
+- [ ] Data Validation (=input is OK?)
+- [ ] Pagination and (Bonus)
+- [ ] Filtering (Bonus)
+- [ ] Unit tests (Bonus)
+- [ ] Rate limiting requests/user (Self Bonus)
+- [ ] Sign data by user. (Self bonus)
