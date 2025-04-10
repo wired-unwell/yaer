@@ -22,7 +22,10 @@ import random
 from prettytable import PrettyTable as pt
 from prettytable import from_json
 
+from trogon import tui
 
+
+@tui()
 @click.group()
 def cli():
     pass
@@ -93,7 +96,6 @@ def list_tasks(nodone, notodo, noinprogress, directory, duedate):
 
 
 cli.add_command(list_tasks)
-cli.add_command(list_tasks, name="l")
 
 
 @click.command("new", help="Add a new task.")
@@ -161,7 +163,6 @@ def new_task(title, description, duedate, createdtime, directory, status):
 
 
 cli.add_command(new_task)
-cli.add_command(new_task, "n")
 
 
 @click.command(name="edit", help="Edit and update your tasks")
@@ -222,7 +223,6 @@ def edit_task(id, done, todo, inprogress, delete, title, description, directory)
 
 
 cli.add_command(edit_task)
-cli.add_command(edit_task, name="e")
 
 
 @click.command(name="show", help="Show a task and its details")
@@ -246,7 +246,11 @@ def show_task(id, directory):
 
 
 cli.add_command(show_task)
-cli.add_command(show_task, name="s")
+
+# cli.add_command(list_tasks, name="l")
+# cli.add_command(new_task, "n")
+# cli.add_command(edit_task, name="e")
+# cli.add_command(show_task, name="s")
 
 if __name__ == "__main__":
     cli()
