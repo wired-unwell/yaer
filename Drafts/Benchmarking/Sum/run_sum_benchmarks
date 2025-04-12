@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+
+# Compile
+/usr/bin/env gcc -o sum-c sum.c
+/usr/bin/env go build -o sum-go sum.go
+
+# Excempted
+
+for file in sum-c sum-go sum.fish sum.janet sum.lua sum.luaj sum.nu sum.py sum.sh;
+    # echo $file
+    chmod +x ./$file
+    ./$file
+end
