@@ -1,0 +1,16 @@
+[1;42;90mC: in 0.058021 seconds[0m.
+[36mGo: 0.007519 seconds.[0m
+[95mFish: This takes absolutely too long, more than 30 secons.[0m
+[95m      The whole script is commented because of that.[0m
+Janet (range): This takes more than 10 seconds. It's been commented out.
+[32mJanet (for):0.708704710006714 seconds[0m.
+[33mJanet (while): 1.63510918617249 seconds[0m.
+[34mJanet (loop): 0.74102783203125 seconds[0m.
+[36mLua: 0.115074 seconds.[0m
+LuaJIT: 0.021625 seconds.
+[33mNu[93mShell: This takes around 10 seconds.[0m
+[33m         It's been commented out.[0m
+[36mPython (range): 0.6415107250213623 seconds.[0m
+[36mPython (for): 3.280846357345581 seconds.[0m
+[100;32mBash:[49m This takes around 15 seconds.[0m
+[100;32m     [49m It's been commented out.[0m

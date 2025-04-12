@@ -1,0 +1,8 @@
+#!/usr/bin/env luajit
+local start = os.clock()
+local result = 0
+for i=0,10000000 do
+	result=result+i
+end
+local finish = os.clock()
+print("LuaJIT: " .. finish - start .. " seconds.")
