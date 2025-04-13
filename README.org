@@ -1,52 +1,31 @@
-* A playground for learning programming
+* Yet Another Experimental Repository
 
-Here lies my messy codes that I experiment with to
-both have fun /and/ learn progrmming concepts and languages.
-Indeed, bigger projects and serious tutorials won't be here.
+This repository is reserved for self-teaching are re-learning the programming skills.
 
-I hate that [[][onefetch] does not support either Fennel or Janet!
-but I'm not using them (extensively) yet so it's forgivable ATM!
-Currently the repository is mostly Python and Lua.
+A playground of some sorts, not completely clean code, experimental, fun.
+There will be possible re-implementations of a script in different programming languages.
+What is this *NOT*? A place for serious, secure, final, production ready projects [fn:1].
+
+* So, what is in this Repo?
+
+The top-level directories are self-explanatory:
+- Drafts are for very small chunks of code I write and use quickly, within a day, and almost never re-use.
+- Projects are for more than that, of the same nature.
+- Tutorials are the files created when using a directed tutorial.
+- Other directories are more dedicated.
+  - Backend
+    - Task Tracker CLI
+    - To-do List API
+    - Workout Tracker API
+  - Mine80: This requires explanation, basically a place for experimental [[https://github.com/nesbox/TIC-80][TIC-80]] carts.
 
 * Cheat-sheet
 
 Any small important note that /I/ have to know gets here.
 
-** ASCII escape character
-
-- \033 :: python
-- \x1b :: lua
-- \e :: shell
-- ^[ :: ?
-
-* What is in this Repo
-** Drafts
-
-All sort of small stuff I'm trying to learn something small.
-
-** Projects
-
-Projects that aim to result in something more than a small test script.
-This thing is possibly REDUNDANT and useless, because things might grow
-big enough to require exclusive repositories /soon/.
-
-*** First TUI Application python
-**** Some Stuff
-- a reddit thread [[[https://www.reddit.com/r/Python/comments/qdj1xr/best_tui_libraryframework/][link]]]
-- seems easy [[[https://github.com/pabloniklas/cur_tools][cur_tools]]]
-- seems beautiful and cool [[[https://github.com/bczsalba/pytermgui][pytermgui]]]
-- [ ] check later https://github.com/pfalcon/picotui
-*** Love2D Bare UI
-*** Store-Inventory UX
-*** Org-Habit Visualizer
-
-** Tutorials
-
-Of course. Dedicated folders to learn an important concept, by usually
-following along with one or more unofficial tutorials, blogs, etc.
+*ASCII escape character* ~\x1b~ is supported in most languages. Even though Python has =\033= and shells have =\e=, this is more supported, so easier remember.
 
 * Other
-
 ** About The Languages
 
 *** Python
@@ -61,49 +40,14 @@ For almost anything, the underrated S-rated language /I love/.
 Daily usage scripts, learning various programming concepts,
 scripting, creating micro games and tools (LOVE2D, TIC-80).
 
-*** Janet
-
-Seems like the best /independent/ LISP scripting language I know right now.
-
-*** Fennel
-
-Lua in LISP style. Janet's rival I guess.
-
-*** BASH
-
-Scripting and system interaction.
-
-*** FISH
-
-The name says it all. Friendly Interactive SHell.
-
-*** R
-
-For Statistics and Data Analysis.
-
-*** Go
-
-I fucking hate being blocked by google due to sancions.
-- Web Dev:
-- GUI: fyne.io
-
-*** Other interesting stuff
-
-**** Clojure
-**** Common Lisp
-**** Haskel
-**** Julia
-**** OCaml
-**** Ruby
-**** Rust
-**** Scheme
-** Some Resources
+** External Links
 
 - [[https://sqrtminusone.xyz/posts/2021-05-01-org-python/][Replacing Jupyter Notebook with Org Mode]]
 - [[https://www.johndcook.com/blog/2022/08/02/org-babel-vs-jupyter/][Org-mode as a lightweight notebook]]
 - [[https://irreal.org/blog/?p=10720][Org-mode Versus Jupyter Notebook]]
 - [[https://en.wikipedia.org/wiki/Programming_paradigm][Programming paradigms Wikipedia]]
 - [[https://realpython.com/python-functional-programming/][Functional Programming in Python: When and How to Use It]]
+- [[https://github.com/krzjoa/awesome-python-data-science][Awesome Python Data Science]]
 
 *** [[https://www.geeksforgeeks.org/data-structures/][Geeks For Geeks - Data Structures]]
 
@@ -114,18 +58,24 @@ I fucking hate being blocked by google due to sancions.
 - [[https://www.w3schools.com/python/matplotlib_intro.asp][Matplotlib]] - This library is used for visualization of data.
 - [[https://www.w3schools.com/python/scipy_intro.asp][SciPy]] - This library has linear algebra modules
 
-** Awesome Lists
+*** [[https://github.com/o2sh/onefetch/][Onefetch]]
 
-- [[https://github.com/krzjoa/awesome-python-data-science][Awesome Python Data Science]]
+/To track the size of my repository locally/.
+
+I hate that it does not support either Fennel or Janet!
+However, I'm not using them (extensively) yet so it's forgivable ATM!
+Currently the repository is mostly Python and Lua.
+
 
 * License
 
-Every piece of code I write here will be licensed under GPL-3.0,
-unless otherwise stated.
-See [[file:LICENSE][GNU General Public License]] local file, or its [[https://www.gnu.org/licenses/gpl-3.0.html][web page].
+*Almost* every piece of code written in this repository will be licensed under GPL-3.0, *unless stated otherwise*.
+Also, files, drafts, and projects under MIT, AGPL-3.0, and Creative Commons licenses will be included.
+
+See GNU General Public [[LICENSE]] local file, or its respective [[https://www.gnu.org/licenses/gpl-3.0.html][web page]].
 
 #+begin_src
-This program is just a directory of followed tutorials to track my learning.
+This repository is just a directory of followed tutorials to track my learning.
 Copyright (C) 2024 Behnam (wired_unwell@noreply.codeberg.org)
 
 This program is free software: you can redistribute it and/or modify
@@ -141,3 +91,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #+end_src
+
+* Footnotes
+
+[fn:1] In the case any "projects" here turn serious, I will release them in dedicated repositories. 
