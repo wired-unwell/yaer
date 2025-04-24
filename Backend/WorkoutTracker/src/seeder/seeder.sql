@@ -3,10 +3,11 @@ CREATE SCHEMA IF NOT EXISTS workout_tracker;
 CREATE TABLE IF NOT EXISTS  workout_tracker.users(
        id SERIAL PRIMARY KEY,
        user_name VARCHAR(255) UNIQUE,
-       passowrd_hash VARCHAR(255) -- possible to hash with plugins
+       password_hash VARCHAR(255) -- possible to hash with plugins
        -- email varchar(255)
+       ON DELETE CASCADE
 );
-
+-- ALTER TABLE workout_tracker.users RENAME COLUMN passowrd_hash TO password_hash;
 -- https://www.dbvis.com/thetable/postgres-on-delete-cascade-a-guide/
 
 CREATE TABLE IF NOT EXISTS workout_tracker.exercises (
