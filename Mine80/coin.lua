@@ -29,12 +29,13 @@ function vector:normalize(factor)
    assert(factor~=0, "Oi")
    local abs = self.x ^ 2 + self.y ^ 2 + self.z ^ 2
    abs = abs / factor
-   return {x = self.x/abs, y = self.y/abs, z = self.z/abs}
+   return vector:new{x = self.x/abs, y = self.y/abs, z = self.z/abs}
 end
 
 --- A method two good normal vectors to a vector.
 ---@return vector, vector
 ---@nodiscard
+---@deprecated
 function vector:orthogonals()
    local u = vector:new {
       x = self.y * self.z,
@@ -46,6 +47,7 @@ function vector:orthogonals()
       y = -2 * self.x * self.z,
       z = self.x * self.y
    }
+   assert(not ((u.x==0 and u.y==0 and u.z == 0) or (v.x==0 and v.y==0 and v.z == 0)), "Calculation error I guess.")
    return u, v
 end
 
@@ -66,10 +68,11 @@ function coin:new(obj)
 end
 
 function vector:shift(dir)
-  self.x = self.x + dir.x
-  self.y = self.y + dir.y
-  self.z = self.z + dir.z
-  return self
+   local v=vector:new{
+      x = self.x + dir.x,
+      y = self.y + dir.y,
+      z = self.z + dir.z}
+   return v
 end
 
 --- Rotate a 3D point/vector.
@@ -91,18 +94,21 @@ function vector:rotate(dx, dy, dz)
    yt = x * math.sin(dz) + y * math.cos(dz)
    x = xt; y = yt
    -- Unncessary side effect: point = {x=x,y=y,z=z}
-   return {x=x,y=y,z=z}
+   return vector:new{x=x,y=y,z=z}
 end
 
 --- Constructs points on a coin based on its normal and radius.
 ---@nodiscard
 function coin:update()
    local r = self.radius
-   -- local u,v = {x=1,y=0,z=0}, {x=0,y=1,z=0} -- this is for 2D circle.
+   -- local u,v = vector:new{x=1,y=0,z=0}, vector:new{x=0,y=1,z=0} -- this is for 2D circle.
    local u,v = vector.orthogonals(self.normal)
+   u,v = u:normalize(), v:normalize()
+   -- trace(u.x .. " " .. u.y .. " " .. u.z, 4)
+   -- trace(v.x .. " " .. v.y .. " " .. v.z, 3)
    local points = {}
    for i=-r,r do
-      local num_r = r-i^2
+      local num_r = math.sqrt(r^2-i^2)
       for j=-num_r,num_r do
 	 -- SHOULD USE NORMAL HERE
 	 table.insert(
@@ -117,14 +123,16 @@ function coin:update()
    return points
 end
 
-function coin:draw(points)
-   local color = 4
+function coin:draw(points, color, x_offset, y_offset)
+   local color = color or 4
+   x_offset = x_offset or 0
+   y_offset = y_offset or 0
    points = points or self:update()
    for i=1,#points do
       local point = points[i]
       pix(
-	 100*point.x / (point.z + 300),
-	 100*point.y / (point.z + 300),
+	 100*point.x / (point.z + 300) + x_offset,
+	 100*point.y / (point.z + 300) + y_offset,
 	 color
       )
    end
@@ -138,15 +146,17 @@ end
 
 ---@param cor vector Center Of Rotation
 function coin:spin(cor,dx,dy,dz)
-   trace(self.center:shift{x=-cor.x,y=-cor.y,z=-cor.z}.x)
+   -- trace(self.center:shift{x=-cor.x,y=-cor.y,z=-cor.z}.x)
    self.center = self.center:shift{x=-cor.x,y=-cor.y,z=-cor.z}:rotate(dx,dy,dz):shift{x=cor.x,y=cor.y,z=cor.z} -- I need to define a proper operator? Not yet, /shift/ works.
    return self
 end
 
 mycoin = coin:new{
    center=vector:new{x=160,y=68+20,z=0},
-   normal=vector:new{z=1.1,y=0,x=1},
-   radius=100} -- center normal radius
+   -- normal=vector:new{z=1,y=1,x=1}:normalize(),
+   normal=vector:new{x=0,y=0,z=1},
+   radius = 20,
+}
 
 
 function TIC()
@@ -154,9 +164,10 @@ function TIC()
    local t = time()/999
    mycoin.center.y = math.abs((10*t)%272-136)
 
-   -- Why does it not work as a proper method? because it checks up methods in /mycoin/ instead of /normal/?
-   mycoin.normal=vector.rotate(mycoin.normal,t/10,0,0)
-   mycoin:draw() -- mycoin:draw(mycoin:update())
+   mycoin.normal=mycoin.normal:rotate(0,t/30,0)
+   local points=mycoin:update() 
+   mycoin:draw(points) -- mycoin:draw(mycoin:update())
+   mycoin:draw(points,3,2,2) -- TODO How to give the coin depth without making it calculation heavy?
 end
 
 
