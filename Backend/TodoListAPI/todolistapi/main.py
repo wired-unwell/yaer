@@ -94,6 +94,7 @@ def verify_jwt(jwt, secret=SECRET_KEY):
                 )
                 return False
     except:
+        # print("Line 97")
         print("\x1b[33m Unexpected error\x1b[0m")
         return False
 
@@ -402,12 +403,5 @@ def main():
         app.run(debug=True)
 
 
-# if __name__ == "__main__":
-#    app.run(debug=True)
-
-with app.app_context():
-    db.create_all()
-    user = User.query.filter_by(username="todolistapi").first()
-    print(user)
-    my_jwt = create_jwt({"message": "hi"})
-    print(jsonify(verify_jwt(my_jwt)))
+if __name__ == "__main__":
+   app.run(debug=True)
