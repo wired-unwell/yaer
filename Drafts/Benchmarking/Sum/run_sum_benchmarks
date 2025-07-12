@@ -6,7 +6,7 @@
 
 # Excempted
 
-for file in sum-c sum-go sum.fish sum.janet sum.lua sum.luaj sum.nu sum.py sum.sh;
+for file in sum-c sum-c-o3 sum-nelua-r sum-nelua sum-go sum.fish sum.janet sum.lua sum.luaj sum.nu sum.py sum.sh;
     # echo $file
     chmod +x ./$file
     ./$file
