@@ -21,6 +21,8 @@ Also, at `protect_endpoint` (around `line 200`) there is a very important back-d
 that is a security nightmare and can easily bypass the whole JWT.
 I used that because I don't like logging in during tests.
 
+It is best practice to hash passwords client-side to further reduce any risk of snooping. (Implement later)
+
 ## License
 
 This is a part of my learning project, released under GPL-3.0.
