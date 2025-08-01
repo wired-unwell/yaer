@@ -1,0 +1,121 @@
+* Workout tracker API
+* Rationale
+
+#+begin_quote
+Why even a "Workout Tracker API" when I have already created a small "TODO list API"?
+#+end_quote
+
+Because this one will be different in a lot of ways. That was my first project in backend and /very/ messy.
+
+This project will be different in
+1. Database: PostgreSQL instead of SQLite3,
+2. Database: Way more advanced,
+3. Database: Seeder available,
+4. Licensing: AGPL instead of GPL.
+
+And better in   
+1. Security: Better authorization, data validation, error handling, unit tests, rate limiting, and possibly signing data,
+2. Code: Cleaner with better flow and using more external tools,
+3. Code: Separated properly in directories,
+4. Project: Better poetry thingy
+5. API Documentations using flasgger (Swagger for Flask),
+6. Small clients for easier usage (Command line or HTML Web-page)
+
+#+begin_quote
+Also, the code is also [[https://github.com/psf/black][blacked]]!
+#+end_quote
+
+* Progress
+
+1. [-] Seeder, [2025-03-24 Mon]
+   - [-] Tables [4/5]
+     - [X] Exercises
+     - [X] Workouts
+     - [X] Workouts <-> Exercises
+     - [X] Schedules
+     - [-] Users
+       - [ ] email missing
+       - [X] other
+       - password hashing is not internal to my postgreSQL right not
+   - [X] Workouts [2/2]
+     - [X] Initial Setup
+     - [X] +Has Bugs+ Fixed [2025-04-13 Sun]
+   - [ ] Dummy User 
+2. [X] User handling
+   - [X] POST /register ::
+   - [X] POST /login ::
+   - [X] DELETE /delete-account :: At least partially? The other tables have =ON DELETE CASCADE= as far as I know.
+3. [-] Workout handling (=CRUD=)
+   - [-] POST workout/new ::
+     - [X] Empty Husk
+     - [ ] Exercise and details
+   - [X] GET workout/list :: Seems to work [2025-08-01 Fri]
+   - [X] GET workout/search/q=<query> :: Seems to work [2025-08-01 Fri]
+   - [X] GET workout/show/<id> :: Will be easy AF, NM
+   - [ ] PUT workout/edit :: Will be hard yet important.?
+   - [X] DELETE workout/<id> :: 
+4. [ ] Exercise handling (=CRUD=)
+   - [ ] GET exercise/list :: 
+   - [ ] GET exercise/?q= ::
+   - [ ] GET exercise/show/<id> :: 
+5. [ ] Schedule handling (=CRUD=)
+   - [ ] POST ::
+   - [ ] GET ::
+   - [ ] PUT ::
+   - [ ] DELETE ::
+6. [ ] Security
+7. [ ] Client
+8. [ ] Tester
+9. [ ] A-sync
+
+* More
+
+Despite not being in the scope of this project,
+PostgreSQL
+is capable of implementing this application's requirements and more.
+
+1. Cool search
+2. JWT
+3. UI
+4. 
+
+* Setup
+** PostgreSQL and Seeder
+
+As postgres user:
+
+#+begin_src bash
+ $ sudo -i -u postgres
+ $ psql
+#+end_src
+
+#+begin_src sql
+CREATE ROLE wt_admin WITH PASSWORD 'admin' LOGIN;
+CREATE DATABASE workout_tracker;
+GRANT ALL PRIVILEGES ON DATABASE workout_tracker TO wt_admin;
+#+end_src
+
+then as wt_admin user:
+
+#+begin_src sql
+CREATE SCHEMA workout_tracker;
+#+end_src
+
+And yes, my database and schema use the same name.
+
+#+begin_src bash
+$ psql -U 'wt_admin' -h localhost -d workout_tracker -f src/seeder/seeder.sql
+#+end_src
+
+** Python and Poetry
+
+#+begin_src bash
+poetry --version
+# Poetry (version 1.8.0)
+postry install 
+#+end_src
+
+* Copying
+
+AGPL instead of GPL, because it is a web project.
+

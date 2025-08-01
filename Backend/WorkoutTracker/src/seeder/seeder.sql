@@ -4,8 +4,7 @@ CREATE TABLE IF NOT EXISTS  workout_tracker.users(
        id SERIAL PRIMARY KEY,
        user_name VARCHAR(255) UNIQUE,
        password_hash VARCHAR(255) -- possible to hash with plugins
-       -- email varchar(255)
-       ON DELETE CASCADE
+       -- email VARCHAR(255)
 );
 -- ALTER TABLE workout_tracker.users RENAME COLUMN passowrd_hash TO password_hash;
 -- https://www.dbvis.com/thetable/postgres-on-delete-cascade-a-guide/
@@ -18,23 +17,25 @@ CREATE TABLE IF NOT EXISTS workout_tracker.exercises (
 	equipment VARCHAR(255)[],
 	intensity INTEGER,
 	difficulty INTEGER,
-	description VARCHAR(255) -- also url
+	description VARCHAR(255), -- also url
+	is_public BOOLEAN,
+	user_id INTEGER REFERENCES workout_tracker.users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS workout_tracker.workouts(
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(255) UNIQUE,
+	name VARCHAR(255) UNIQUE, -- Should it really be /unique/?
 	description VARCHAR(255),
 	is_public BOOLEAN,
-	user_id INTEGER REFERENCES workout_tracker.users(id)
+	user_id INTEGER REFERENCES workout_tracker.users(id) ON DELETE CASCADE
 );
 
 -- user_id only if not public? or always okay?
 
 CREATE TABLE IF NOT EXISTS workout_tracker.workouts_exercises(
 	id SERIAL UNIQUE,-- PRIMARY KEY UNIQUE,
-	workout_id INTEGER REFERENCES workout_tracker.workouts(id),
-	exercise_id INTEGER REFERENCES workout_tracker.exercises(id),
+	workout_id INTEGER REFERENCES workout_tracker.workouts(id) ON DELETE CASCADE,
+	exercise_id INTEGER REFERENCES workout_tracker.exercises(id) ON DELETE CASCADE,
 	weight INTEGER,
 	sets INTEGER,
 	reps INTEGER,
@@ -49,8 +50,8 @@ CREATE TABLE IF NOT EXISTS workout_tracker.workouts_exercises(
 
 CREATE TABLE IF NOT EXISTS workout_tracker.schedules(
 	id SERIAL PRIMARY KEY UNIQUE,
-	user_id INTEGER REFERENCES workout_tracker.users(id),
-	workout_id INTEGER REFERENCES workout_tracker.workouts(id),
+	user_id INTEGER NOT NULL REFERENCES workout_tracker.users(id) ON DELETE CASCADE,
+	workout_id INTEGER REFERENCES workout_tracker.workouts(id) ON DELETE CASCADE,
 	schedule_date DATE,
 	schedule_time TIME,
 	status BOOLEAN,
