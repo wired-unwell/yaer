@@ -1,71 +1,26 @@
-* Yet Another Experimental Repository
+* Description
 
-This repository is reserved for self-teaching are re-learning the programming skills.
+YAER is Yet Another Experimental Repository, is reserved for partial
+tracking my progress in self-study of several the programming skills.
+A playground of some sorts, not completely clean code, experimental,
+fun.  What is this *NOT*? A place for serious, secure, final,
+production ready projects [fn:1], and not a programming portfolio.
 
-A playground of some sorts, not completely clean code, experimental, fun.
-There will be possible re-implementations of a script in different programming languages.
-What is this *NOT*? A place for serious, secure, final, production ready projects [fn:1].
+* Structure
 
-* So, what is in this Repo?
+The top-level directories are self-explanatory. Drafts are small
+standalone scripts, with possible duplicates in functionality but
+different implementations. Tutorials are the files created when using
+a directed tutorial. More important projects in /Projects/ and
+/Backend/ include:
 
-The top-level directories are self-explanatory:
-- Drafts are for very small chunks of code I write and use quickly, within a day, and almost never re-use.
-- Projects are for more than that, of the same nature.
-- Tutorials are the files created when using a directed tutorial.
-- Other directories are more dedicated.
-  - Backend
-    - Task Tracker CLI
-    - To-do List API
-    - Workout Tracker API
-  - Mine80: This requires explanation, basically a place for experimental [[https://github.com/nesbox/TIC-80][TIC-80]] carts.
+- Task Tracker CLI, written in [[https://python.org][Python]], using [[https://click.palletsprojects.com/][click]]. Tasks are stored in plain JSON. Followed [[https://roadmap.sh/projects/task-tracker][task tracker at Roadmap.sh]] specifications.
+- To-Do List API, written in [[https://python.org][Python]], using [[https://flask.palletsprojects.com/][Flask]], [[https://click.palletsprojects.com/][click]], [[https://flask-sqlalchemy.readthedocs.io/][flask-sqlalchemy]], and [[https://python-poetry.org/][Poetry]]. TODO are stored in a [[https://www.sqlite.org/][SQLite3]] database. Followed [[https://roadmap.sh/projects/todo-list-api][todo list api at Roadmap.sh]] specifications.
+- Workout Tracker API (developed in the =workouttracker= branch), written in [[https://python.org][Python]], using [[https://flask.palletsprojects.com/][Flask]], [[https://click.palletsprojects.com/][click]], [[https://flask-sqlalchemy.readthedocs.io/][Psycopg]], [[https://flask-jwt-extended.readthedocs.io/][flask jwt extended]], and [[https://python-poetry.org/][Poetry]]. Workouts are stored in a PostgreSQL database. Followed [[https://roadmap.sh/projects/todo-list-api][todo list api at Roadmap.sh]] specifications.
 
-* Cheat-sheet
+* Contact
 
-Any small important note that /I/ have to know gets here.
-
-*ASCII escape character* ~\x1b~ is supported in most languages. Even though Python has =\033= and shells have =\e=, this is more supported, so easier remember.
-
-* Other
-** About The Languages
-
-*** Python
-
-For almost anything productive! The S-rate language I hate.
-- GUI: [[https://www.riverbankcomputing.com/static/Docs/PyQt6/][PyQt6]] ([[https://doc.qt.io/qt-6/][Qt6]]), [[https://kivymd.readthedocs.io/][KivyMD]] ([[http://kivy.org/][Kivy]])
-- Data Analysis: [[https://pandas.pydata.org/][pandas]]
-
-*** Lua
-
-For almost anything, the underrated S-rated language /I love/.
-Daily usage scripts, learning various programming concepts,
-scripting, creating micro games and tools (LOVE2D, TIC-80).
-
-** External Links
-
-- [[https://sqrtminusone.xyz/posts/2021-05-01-org-python/][Replacing Jupyter Notebook with Org Mode]]
-- [[https://www.johndcook.com/blog/2022/08/02/org-babel-vs-jupyter/][Org-mode as a lightweight notebook]]
-- [[https://irreal.org/blog/?p=10720][Org-mode Versus Jupyter Notebook]]
-- [[https://en.wikipedia.org/wiki/Programming_paradigm][Programming paradigms Wikipedia]]
-- [[https://realpython.com/python-functional-programming/][Functional Programming in Python: When and How to Use It]]
-- [[https://github.com/krzjoa/awesome-python-data-science][Awesome Python Data Science]]
-
-*** [[https://www.geeksforgeeks.org/data-structures/][Geeks For Geeks - Data Structures]]
-
-*** [[https://www.w3schools.com/datascience/ds_python.asp][W3Schools - Data Science]]                                       :python:
-
-- [[https://www.w3schools.com/python/pandas/default.asp][Pandas]] - This library is used for structured data operations, like import CSV files, create dataframes, and data preparation
-- [[https://www.w3schools.com/python/numpy_intro.asp][Numpy]] - This is a mathematical library. Has a powerful N-dimensional array object, linear algebra, Fourier transform, etc.
-- [[https://www.w3schools.com/python/matplotlib_intro.asp][Matplotlib]] - This library is used for visualization of data.
-- [[https://www.w3schools.com/python/scipy_intro.asp][SciPy]] - This library has linear algebra modules
-
-*** [[https://github.com/o2sh/onefetch/][Onefetch]]
-
-/To track the size of my repository locally/.
-
-I hate that it does not support either Fennel or Janet!
-However, I'm not using them (extensively) yet so it's forgivable ATM!
-Currently the repository is mostly Python and Lua.
-
+My responsive email, also used for identification, is ~behnam_{birthday}@protonmail.com~.
 
 * License
 
